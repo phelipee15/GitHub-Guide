@@ -140,11 +140,7 @@ A partir daí, tudo que você escrever no `README.md` desse repositório aparece
 
 <!-- 5. Projetos em destaque (links para repos) -->
 
-<!-- 6. Estatísticas do GitHub (cards automáticos) -->
-
-<!-- 7. Contador de visitas -->
-
-<!-- 8. Footer animado -->
+<!-- 6. Footer animado -->
 ```
 
 ### Dicas para o username
@@ -316,75 +312,50 @@ Exibe quantas pessoas já visitaram seu perfil.
 
 ---
 
-## 5. Template Completo
+## 5. Template Base
 
-Copie, substitua `SEU_USERNAME` e `SEU_NOME` e personalize à vontade:
+Copie, substitua os campos marcados e personalize à vontade. Este é um ponto de partida limpo e funcional — sem dependências externas que possam quebrar.
 
 ```markdown
 <!-- Banner -->
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a2a6c,50:3e5abb,100:2b4aad&height=200&section=header&text=SEU_NOME&fontSize=48&fontColor=ffffff&fontAlignY=38&desc=Developer+%7C+Back-end+%7C+Data+Science&descAlignY=58&descSize=18&animation=fadeIn" width="100%"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a2a6c,50:3e5abb,100:2b4aad&height=200&section=header&text=SEU_NOME&fontSize=48&fontColor=ffffff&fontAlignY=38&desc=Developer+%7C+Área+1+%7C+Área+2&descAlignY=58&descSize=18&animation=fadeIn" width="100%"/>
 </div>
 
 <!-- Redes sociais -->
 <div align="center">
-  <a href="https://linkedin.com/in/seu-perfil">
+  <a href="https://linkedin.com/in/SEU_PERFIL">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
   </a>
-  <a href="mailto:seuemail@gmail.com">
+  <a href="mailto:SEU_EMAIL@gmail.com">
     <img src="https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"/>
   </a>
   <a href="https://github.com/SEU_USERNAME">
     <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
   </a>
-  <a href="https://discord.com/users/SEU_ID">
+  <a href="https://discord.com/users/SEU_ID_DISCORD">
     <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"/>
   </a>
 </div>
 
 <br/>
 
-<!-- Contador de visitas -->
-<div align="center">
-  <img src="https://komarev.com/ghpvc/?username=SEU_USERNAME&color=1a2a6c&style=flat-square&label=Visitantes+no+perfil"/>
-</div>
-
 ## Sobre mim
 
-```python
-dev = {
-    "nome":       "Seu Nome Completo",
-    "localização":"Sua Cidade, Brasil",
-    "formação":   "Sua Universidade",
-    "interesses": ["Back-end", "Data Science", "Automação"],
-    "status":     "Em constante evolução"
-}
-```
+Escreva aqui uma apresentação direta: quem você é, onde estuda ou trabalha, no que está focado agora e o que te interessa na área de tecnologia.
 
 ## Tecnologias e Ferramentas
 
 <div align="center">
-  <img src="https://skillicons.dev/icons?i=python,js,nodejs,c,lua,git,vscode,sqlite"/>
+  <img src="https://skillicons.dev/icons?i=python,js,nodejs,git,vscode"/>
 </div>
 
-## Estatísticas
+## Projetos em destaque
 
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=SEU_USERNAME&show_icons=true&theme=tokyonight" height="180"/>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=SEU_USERNAME&layout=compact&theme=tokyonight" height="180"/>
-</div>
-
-<br/>
-
-<!-- Cobrinha -->
-<div align="center">
-  <img src="https://raw.githubusercontent.com/SEU_USERNAME/SEU_USERNAME/snake-output/snake.svg" alt="Snake animation"/>
-</div>
-
-<!-- Troféus -->
-<div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=SEU_USERNAME&theme=darkhub&no-frame=true&row=1&column=7" alt="Troféus"/>
-</div>
+| Projeto | Descrição | Tecnologias |
+|---|---|---|
+| [nome-do-projeto](https://github.com/SEU_USERNAME/nome-do-projeto) | Breve descrição do que ele faz | Python, SQLite |
+| [outro-projeto](https://github.com/SEU_USERNAME/outro-projeto) | Breve descrição do que ele faz | Node.js, API REST |
 
 <!-- Footer -->
 <div align="center">
