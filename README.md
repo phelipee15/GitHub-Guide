@@ -19,7 +19,8 @@
 7. [Configurando o Git](#7-configurando-o-git)
 8. [Integrando com VS Code](#8-integrando-com-vs-code)
 9. [Comandos Git](#9-comandos-git)
-10. [Boas Práticas](#10-boas-práticas)
+10. [Fork](#10-fork)
+11. [Boas Práticas](#11-boas-práticas)
 
 ---
 
@@ -574,14 +575,17 @@ git push origin main
 
 ```
 Antes do merge:
-main     ──●──●──────────────●
-                              \
-feature  ──────────●──●──●
+
+main     ──●──●──●
+                  \
+feature            ●──●──●
+
 
 Depois do merge:
-main     ──●──●──────────────●──●  (merge commit)
-                              \ /
-feature  ──────────●──●──●───
+
+main     ──●──●──●──────────────●  (merge commit)
+                  \            /
+feature            ●──●──●────
 ```
 
 ---
@@ -737,6 +741,63 @@ git reset --soft HEAD~1
 git revert abc1234
 ```
 
+### Stash — Guardando trabalho inacabado
+
+O stash funciona como uma gaveta temporária. Você guarda as alterações que ainda não quer commitar, limpa o ambiente de trabalho, faz o que precisa em outra branch e depois recupera tudo de onde parou.
+
+**Cenário típico:** você está desenvolvendo uma feature no meio, quando chega uma correção urgente de bug que precisa ser feita agora na `main`. Você não pode fazer commit de um código incompleto — é aí que o stash entra.
+
+```bash
+# Guardar todas as alterações atuais no stash
+git stash
+
+# Guardar com uma descrição (recomendado)
+git stash push -m "feature login: formulário pela metade"
+
+# Listar tudo que está guardado no stash
+git stash list
+# Saída: stash@{0}: feature login: formulário pela metade
+#        stash@{1}: WIP on main: ajuste de layout
+
+# Recuperar o stash mais recente (mantém no stash)
+git stash apply
+
+# Recuperar um stash específico pelo índice
+git stash apply stash@{1}
+
+# Recuperar o mais recente E remover do stash
+git stash pop
+
+# Remover um stash específico sem aplicar
+git stash drop stash@{0}
+
+# Limpar todo o stash
+git stash clear
+```
+
+**Fluxo completo com stash:**
+
+```bash
+# 1. Você está na feature/login com código inacabado
+git stash push -m "login: validação do formulário incompleta"
+
+# 2. Troca para a main e corrige o bug urgente
+git checkout main
+git checkout -b fix/bug-urgente
+# ... faz a correção ...
+git commit -m "fix: corrige falha no cálculo de frete"
+git push origin fix/bug-urgente
+
+# 3. Volta para a feature e recupera o trabalho
+git checkout feature/login
+git stash pop
+# Código volta exatamente como estava
+```
+
+> O stash salva apenas arquivos rastreados pelo Git. Arquivos novos que ainda não passaram por `git add` não entram no stash por padrão. Use `git stash push -u` para incluí-los.
+
+---
+
 ### Padrão de mensagens de commit — Conventional Commits
 
 Adotar um padrão torna o histórico legível e facilita a automação de changelogs.
@@ -764,7 +825,62 @@ git commit -m "refactor: separa lógica de validação em módulo próprio"
 
 ---
 
-## 10. Boas Práticas
+## 10. Fork
+
+Um fork cria uma cópia completa de um repositório de **outra pessoa** na sua conta do GitHub. Diferente do clone (que só baixa localmente), o fork existe no GitHub e mantém uma ligação com o repositório original.
+
+```
+Repositório original       Seu fork (cópia na sua conta)
+github.com/outro/projeto → github.com/SEU_USERNAME/projeto
+```
+
+**Quando usar fork:**
+
+- Contribuir com um projeto open source que você não tem permissão de editar diretamente
+- Usar um projeto alheio como base para o seu próprio, mantendo o histórico de origem
+- Experimentar mudanças no código de outra pessoa sem afetar o original
+
+**Como fazer um fork:**
+
+1. Acesse o repositório que deseja no GitHub
+2. Clique no botão **"Fork"** no canto superior direito
+3. Escolha sua conta como destino
+4. O GitHub cria uma cópia em `github.com/SEU_USERNAME/nome-do-repo`
+
+**Clonando seu fork localmente:**
+
+```bash
+# Clone o SEU fork (não o original)
+git clone https://github.com/SEU_USERNAME/nome-do-repo.git
+cd nome-do-repo
+
+# Adicione o repositório original como remote "upstream"
+# Isso permite receber atualizações do projeto original
+git remote add upstream https://github.com/outro-usuario/nome-do-repo.git
+
+# Verificar os remotes configurados
+git remote -v
+# origin    https://github.com/SEU_USERNAME/nome-do-repo.git  (seu fork)
+# upstream  https://github.com/outro-usuario/nome-do-repo.git (original)
+```
+
+**Mantendo o fork atualizado com o original:**
+
+```bash
+# Buscar as atualizações do repositório original
+git fetch upstream
+
+# Aplicar na sua main local
+git checkout main
+git merge upstream/main
+
+# Enviar para o seu fork no GitHub
+git push origin main
+```
+
+---
+
+## 11. Boas Práticas
 
 ### Perfil
 
