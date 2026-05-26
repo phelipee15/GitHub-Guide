@@ -14,7 +14,7 @@
 2. [Criando seu primeiro repositório](#2-criando-seu-primeiro-repositório)
 3. [Criando seu perfil](#3-criando-seu-perfil)
 4. [Ferramentas](#4-ferramentas)
-5. [Template Completo](#5-template-completo)
+5. [Template Base](#5-template-base)
 6. [Instalando o Git](#6-instalando-o-git)
 7. [Configurando o Git](#7-configurando-o-git)
 8. [Integrando com VS Code](#8-integrando-com-vs-code)
@@ -504,24 +504,205 @@ git pull origin main
 
 ### Branches
 
+Uma branch é uma linha de desenvolvimento independente. Ela permite que você trabalhe em uma funcionalidade ou correção sem afetar o código principal — e sem afetar o trabalho dos outros membros do time.
+
+```
+main ──●──────────────────────●── (produção, sempre estável)
+        \                    /
+         ●──●──●  feature/login  (seu trabalho isolado)
+```
+
 ```bash
-# Listar todas as branches
+# Listar todas as branches locais
 git branch
+
+# Listar branches locais e remotas
+git branch -a
 
 # Criar uma nova branch
 git branch minha-feature
 
-# Criar e já entrar na branch
+# Criar e já entrar na branch (forma mais usada)
 git checkout -b minha-feature
 
 # Mudar para uma branch existente
 git checkout main
 
-# Mesclar uma branch na branch atual
-git merge minha-feature
+# Renomear a branch atual
+git branch -m novo-nome
 
-# Deletar uma branch (após o merge)
+# Deletar uma branch local (após o merge)
 git branch -d minha-feature
+
+# Forçar deleção (mesmo sem merge — cuidado)
+git branch -D minha-feature
+```
+
+**Convenção de nomes para branches:**
+
+| Prefixo | Uso | Exemplo |
+|---|---|---|
+| `feature/` | Nova funcionalidade | `feature/tela-login` |
+| `fix/` | Correção de bug | `fix/calculo-desconto` |
+| `docs/` | Documentação | `docs/atualiza-readme` |
+| `refactor/` | Refatoração | `refactor/modulo-auth` |
+| `hotfix/` | Correção urgente em produção | `hotfix/falha-pagamento` |
+
+> Nunca desenvolva diretamente na branch `main`. Ela deve sempre refletir o código estável e funcional.
+
+---
+
+### Merge — Unindo branches
+
+O merge integra o histórico de uma branch em outra. É o passo final depois que uma funcionalidade está pronta e testada.
+
+```bash
+# 1. Volte para a branch que vai RECEBER as alterações
+git checkout main
+
+# 2. Atualize ela com o que está no GitHub
+git pull origin main
+
+# 3. Faça o merge da sua feature
+git merge feature/tela-login
+
+# 4. Envie o resultado para o GitHub
+git push origin main
+```
+
+**O que acontece internamente:**
+
+```
+Antes do merge:
+main     ──●──●──────────────●
+                              \
+feature  ──────────●──●──●
+
+Depois do merge:
+main     ──●──●──────────────●──●  (merge commit)
+                              \ /
+feature  ──────────●──●──●───
+```
+
+---
+
+### Conflitos de merge — O que são e como resolver
+
+Um conflito acontece quando duas pessoas editaram **o mesmo trecho do mesmo arquivo** em branches diferentes. O Git não sabe qual versão manter e pede que você decida.
+
+**Situação típica que gera conflito:**
+
+```
+João editou a linha 15 do arquivo app.py na branch feature/login
+Maria editou a mesma linha 15 do mesmo arquivo na branch feature/cadastro
+Quando alguém faz merge, o Git encontra duas versões incompatíveis
+```
+
+**Como o conflito aparece no arquivo:**
+
+```python
+<<<<<<< HEAD  (versão atual — branch que está recebendo o merge)
+def saudacao():
+    return "Olá, usuário!"
+=======
+def saudacao():
+    return "Bem-vindo ao sistema!"
+>>>>>>> feature/cadastro  (versão que está chegando pelo merge)
+```
+
+**Como resolver:**
+
+1. Abra o arquivo com conflito no VS Code — ele destaca os conflitos visualmente
+2. Escolha qual versão manter, ou escreva uma terceira versão combinando as duas
+3. Remova **todas** as marcações (`<<<<<<<`, `=======`, `>>>>>>>`)
+4. Salve o arquivo
+5. Faça o commit do resultado:
+
+```bash
+git add app.py
+git commit -m "fix: resolve conflito de merge na função saudacao"
+```
+
+**No VS Code**, ao abrir um arquivo com conflito, aparecem botões acima de cada bloco:
+
+- **Accept Current Change** — mantém a versão da sua branch
+- **Accept Incoming Change** — mantém a versão que está chegando
+- **Accept Both Changes** — inclui as duas versões, uma após a outra
+- **Compare Changes** — abre uma view lado a lado para comparar
+
+---
+
+### Como evitar sobrescrever o código de outra pessoa
+
+Este é o erro mais comum em times. Seguir este fluxo protege você e sua equipe:
+
+**Regra 1 — Sempre atualize sua branch antes de fazer merge**
+
+```bash
+# Antes de fazer merge de qualquer coisa, traga o que há de novo na main
+git checkout main
+git pull origin main
+
+# Agora volte para a sua feature e aplique as mudanças da main nela
+git checkout feature/minha-feature
+git merge main
+# Se houver conflitos, resolva agora — antes de mexer no código do time
+```
+
+**Regra 2 — Use `git pull` antes de qualquer `git push`**
+
+```bash
+# Sempre puxe antes de enviar
+git pull origin main
+git push origin main
+```
+
+Se você tentar fazer push sem antes puxar as atualizações, o Git vai rejeitar e pedir que você resolva as diferenças localmente primeiro — o que é o comportamento correto.
+
+**Regra 3 — Nunca faça `git push --force` na branch principal**
+
+O `--force` sobrescreve o histórico remoto sem aviso. Se alguém tiver commits que você não tem localmente, eles somem permanentemente.
+
+```bash
+# NÃO FAÇA isso em branches compartilhadas
+git push --force origin main  # destrói o trabalho de outras pessoas
+
+# Se precisar corrigir sua própria branch de feature (somente sua)
+git push --force origin feature/minha-feature  # aceitável com cuidado
+```
+
+**Regra 4 — Comunique antes de mexer em arquivos críticos**
+
+Arquivos como `package.json`, `requirements.txt`, arquivos de configuração e de banco de dados são alterados com frequência por todos. Se alguém do time for alterar esses arquivos, avisar antes evita a maioria dos conflitos.
+
+---
+
+### Fluxo seguro para trabalho em equipe
+
+```bash
+# 1. Sempre comece atualizando a main
+git checkout main
+git pull origin main
+
+# 2. Crie uma branch para sua tarefa
+git checkout -b feature/nome-da-tarefa
+
+# 3. Desenvolva e faça commits frequentes
+git add .
+git commit -m "feat: descrição do que foi feito"
+
+# 4. Antes de fazer merge, atualize sua branch com a main
+git merge main
+# Resolva conflitos se houver
+
+# 5. Envie sua branch para o GitHub
+git push origin feature/nome-da-tarefa
+
+# 6. Abra um Pull Request no GitHub para revisão
+# (Settings → Pull Requests → New Pull Request)
+
+# 7. Após aprovação e merge, delete a branch
+git branch -d feature/nome-da-tarefa
 ```
 
 ### Histórico e inspeção
