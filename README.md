@@ -20,7 +20,8 @@
 8. [Integrando com VS Code](#8-integrando-com-vs-code)
 9. [Comandos Git](#9-comandos-git)
 10. [Fork](#10-fork)
-11. [Boas Práticas](#11-boas-práticas)
+11. [Issues e Pull Requests](#11-issues-e-pull-requests)
+12. [Boas Práticas](#12-boas-práticas)
 
 ---
 
@@ -880,7 +881,259 @@ git push origin main
 
 ---
 
-## 11. Boas Práticas
+## 11. Issues e Pull Requests
+
+Issues e Pull Requests são os dois pilares da colaboração no GitHub. Eles transformam um repositório em um espaço de trabalho organizado, onde cada tarefa tem rastreamento e cada mudança de código passa por revisão.
+
+```
+Issue   →  "existe um problema ou uma ideia"  (discussão)
+PR      →  "aqui está a solução em código"     (revisão + merge)
+```
+
+---
+
+### Issues — Rastreando tarefas e bugs
+
+Uma **Issue** é um registro público (ou privado) de qualquer coisa que precisa ser feita ou discutida no projeto: um bug encontrado, uma feature sugerida, uma dúvida, uma melhoria de documentação.
+
+**Como criar uma Issue:**
+
+1. Acesse o repositório no GitHub
+2. Clique na aba **"Issues"**
+3. Clique em **"New issue"**
+4. Preencha o título e a descrição
+5. Opcionalmente configure os campos à direita:
+   - **Assignees** — quem vai resolver
+   - **Labels** — categoria da issue
+   - **Milestone** — versão ou sprint a que pertence
+   - **Projects** — vincula a um quadro Kanban
+6. Clique em **"Submit new issue"**
+
+**Anatomia de uma boa Issue:**
+
+```markdown
+## Descrição
+Explique claramente o problema ou a funcionalidade desejada.
+
+## Como reproduzir (para bugs)
+1. Acesse a tela X
+2. Clique em Y
+3. Observe o erro Z
+
+## Comportamento esperado
+Descreva o que deveria acontecer.
+
+## Comportamento atual
+Descreva o que acontece de fato.
+
+## Ambiente
+- OS: Ubuntu 22.04
+- Node.js: v20.10
+- Versão do projeto: 1.3.2
+```
+
+---
+
+### Labels — Organizando por categoria
+
+As labels são etiquetas coloridas que classificam as issues e PRs. O GitHub já cria algumas por padrão, e você pode criar as suas.
+
+**Labels padrão do GitHub:**
+
+| Label | Cor | Uso |
+|---|---|---|
+| `bug` | Vermelho | Algo não está funcionando |
+| `enhancement` | Azul | Nova funcionalidade ou melhoria |
+| `documentation` | Azul escuro | Melhorias na documentação |
+| `good first issue` | Verde | Boa para quem está começando a contribuir |
+| `help wanted` | Verde | Precisa de ajuda extra |
+| `question` | Rosa | Dúvida ou pedido de informação |
+| `wontfix` | Branco | Não será corrigido/implementado |
+| `duplicate` | Cinza | Já existe outra issue igual |
+| `invalid` | Amarelo | Issue não é válida |
+
+**Criando labels personalizadas:**
+
+1. Acesse `Issues → Labels → New label`
+2. Digite o nome, escolha a cor e salve
+3. Aplique em qualquer issue ou PR pelo painel lateral
+
+**Exemplo de conjunto de labels para um projeto:**
+
+```
+priority: high    → vermelho escuro
+priority: medium  → laranja
+priority: low     → amarelo
+type: bug         → vermelho
+type: feature     → azul
+type: docs        → azul escuro
+status: in review → roxo
+status: blocked   → preto
+```
+
+---
+
+### Milestones — Agrupando por versão ou sprint
+
+Uma **Milestone** agrupa issues e PRs em torno de um objetivo, versão ou data. Ao associar itens a uma milestone, o GitHub mostra automaticamente o progresso percentual.
+
+**Como criar:**
+
+1. Acesse `Issues → Milestones → New milestone`
+2. Dê um título (ex: `v1.0.0` ou `Sprint 3`)
+3. Adicione uma descrição e, opcionalmente, uma data de entrega
+4. Salve e comece a associar issues a ela pelo painel lateral
+
+---
+
+### Referenciando Issues em commits e PRs
+
+O GitHub entende referências a issues em mensagens de commit e no corpo de PRs. Você pode fechar uma issue automaticamente ao fazer merge de um PR.
+
+**Palavras-chave que fecham a issue automaticamente no merge:**
+
+```bash
+# Nos commits
+git commit -m "fix: corrige validação do formulário — closes #42"
+git commit -m "feat: adiciona autenticação — fixes #17, resolves #18"
+
+# No corpo do Pull Request
+"Closes #42"
+"Fixes #17"
+"Resolves #55"
+```
+
+**Apenas referenciar sem fechar:**
+
+```bash
+git commit -m "refactor: simplifica lógica de login (relacionado a #30)"
+# Cria um link para a issue sem fechá-la
+```
+
+---
+
+### Pull Requests — Propondo e revisando código
+
+Um **Pull Request** (PR) é uma proposta formal para integrar as alterações de uma branch em outra. Antes do merge, o código fica disponível para revisão, discussão e aprovação.
+
+```
+feature/login ──●──●──●
+                        \
+                         ─── PR aberto ──→ revisão ──→ merge ──→ main
+```
+
+**Como abrir um Pull Request:**
+
+1. Faça push da sua branch para o GitHub
+2. O GitHub exibe automaticamente o banner **"Compare & pull request"** — clique nele
+   - Ou acesse a aba **"Pull requests"** → **"New pull request"**
+3. Selecione a branch de origem (sua feature) e a branch de destino (geralmente `main`)
+4. Preencha o título e a descrição do PR
+5. Configure os campos laterais:
+   - **Reviewers** — quem vai revisar o código
+   - **Assignees** — quem é responsável pelo PR
+   - **Labels** — categorize o PR
+   - **Milestone** — vincule a uma versão
+6. Clique em **"Create pull request"**
+
+**Modelo de descrição de PR:**
+
+```markdown
+## O que foi feito
+Descrição clara e objetiva das mudanças implementadas.
+
+## Como testar
+1. Clone a branch `feature/nome`
+2. Execute `npm install`
+3. Acesse a rota `/login` e teste o formulário
+
+## Checklist
+- [ ] Código testado localmente
+- [ ] Sem conflitos com a main
+- [ ] Documentação atualizada (se necessário)
+- [ ] Sem `console.log` ou código de debug esquecido
+
+## Issues relacionadas
+Closes #42
+```
+
+---
+
+### Revisando um Pull Request
+
+Quando você é adicionado como **Reviewer**, o GitHub notifica você por e-mail. Para revisar:
+
+1. Acesse o PR e vá na aba **"Files changed"**
+2. Leia o diff (as linhas em vermelho foram removidas, as verdes foram adicionadas)
+3. Para comentar em uma linha específica, passe o mouse sobre ela e clique no `+`
+4. Adicione sugestões de mudança diretamente no código:
+
+````markdown
+```suggestion
+return res.status(400).json({ error: "Campo obrigatório" });
+```
+````
+
+5. Ao terminar, clique em **"Review changes"** e escolha:
+   - **Comment** — deixa comentários sem aprovar nem bloquear
+   - **Approve** — aprova o PR para merge
+   - **Request changes** — solicita alterações antes do merge
+
+---
+
+### Tipos de merge no GitHub
+
+Ao clicar em **"Merge pull request"**, o GitHub oferece três estratégias:
+
+| Tipo | O que faz | Quando usar |
+|---|---|---|
+| **Merge commit** | Cria um commit de merge preservando todo o histórico da branch | Projetos que valorizam histórico completo |
+| **Squash and merge** | Junta todos os commits da branch em um único commit na main | Manter a main com histórico limpo e linear |
+| **Rebase and merge** | Reaplica os commits da branch um a um na main, sem commit de merge | Times que preferem histórico linear sem merge commits |
+
+> A estratégia mais comum em projetos de equipe é o **Squash and merge** — mantém a main limpa enquanto a branch de feature pode ter quantos commits intermediários forem necessários.
+
+---
+
+### Draft Pull Requests
+
+Um **Draft PR** sinaliza que o trabalho ainda está em andamento e que o PR **não está pronto para revisão**. É útil para visibilidade antecipada e para pedir feedback informal sem iniciar o processo formal de aprovação.
+
+**Como criar:**
+
+1. Ao abrir o PR, clique na seta ao lado de **"Create pull request"**
+2. Selecione **"Create draft pull request"**
+
+Quando estiver pronto, clique em **"Ready for review"** para converter em PR normal.
+
+---
+
+### Fluxo completo com Issues e PRs
+
+```
+1. Alguém abre uma Issue descrevendo o bug ou a feature
+   └─ Issue #42: "Formulário de login não valida e-mail"
+
+2. Um dev é atribuído e cria uma branch a partir da main
+   └─ git checkout -b fix/validacao-email
+
+3. Desenvolve, commita com referência à issue
+   └─ git commit -m "fix: valida formato de e-mail — closes #42"
+
+4. Faz push e abre um Pull Request
+   └─ PR: "fix: validação de e-mail no formulário de login"
+   └─ Closes #42
+
+5. Reviewer aprova ou solicita ajustes
+
+6. Merge é feito → Issue #42 é fechada automaticamente
+
+7. Branch é deletada
+```
+
+---
+
+## 12. Boas Práticas
 
 ### Perfil
 
@@ -895,18 +1148,45 @@ git push origin main
 - Use **descrição** e **tópicos (tags)** em cada repositório para facilitar a descoberta por outros desenvolvedores
 - Nunca versione arquivos `.env` ou qualquer arquivo com credenciais, tokens ou senhas — use `.gitignore`
 - Crie **releases** em projetos com versões públicas
+- Adicione um arquivo `LICENSE` — sem ele, ninguém tem permissão legal para usar seu código. Para projetos abertos, as mais comuns são MIT, Apache 2.0 e GPL 3.0
+- Use **GitHub Projects** (quadros Kanban) para organizar tarefas em repositórios colaborativos — fica integrado diretamente com Issues e PRs
 
 ### Commits
 
 - Faça commits **pequenos e frequentes** — um commit por alteração lógica, não um commit gigante no fim do dia
 - Escreva mensagens **no imperativo** e em português ou inglês, de forma consistente
 - Nunca faça `git add .` sem antes rodar `git status` para saber o que está sendo incluído
+- Use **`git commit --amend`** para corrigir a mensagem ou adicionar arquivos esquecidos no último commit **antes** de fazer push — nunca depois
+
+### Issues
+
+- **Sempre abra uma Issue antes de começar a trabalhar** em algo novo — isso evita duplicação de esforço em times
+- Use **labels e milestones** desde o início do projeto; organizar retroativamente é muito mais trabalhoso
+- Feche issues via commits e PRs usando as palavras-chave (`closes`, `fixes`, `resolves`) — mantém o rastreamento automático e o histórico conectado
+- Se uma issue for muito grande, quebre em issues menores e use **task lists** dentro dela:
+
+```markdown
+## Tarefas
+- [x] Criar estrutura do banco de dados
+- [ ] Implementar endpoint de autenticação
+- [ ] Escrever testes unitários
+- [ ] Atualizar documentação
+```
+
+### Pull Requests
+
+- **Nunca faça PR direto para a main** sem revisão em projetos colaborativos — use branch protection rules (`Settings → Branches → Add rule`)
+- PRs devem ser **pequenos e focados** — um PR por funcionalidade ou correção. PRs com 50+ arquivos alterados são difíceis de revisar e propensos a passar bugs despercebidos
+- Responda **todos os comentários** de review antes de solicitar uma nova rodada de revisão — mesmo que seja apenas um "feito" ou "discordei, aqui está o motivo"
+- Use **Draft PRs** para trabalho em andamento que precisa de visibilidade antecipada, mas ainda não está pronto para revisão formal
+- Configure **branch protection** na main para exigir pelo menos uma aprovação antes do merge — isso evita merges acidentais e mantém a qualidade do código
 
 ### Contribuições e visibilidade
 
 - O gráfico de contribuições fica verde com commits, Pull Requests, issues abertas e code reviews
 - Contribua com projetos open source — aparece no histórico público do seu perfil
 - Comente issues e PRs — demonstra participação na comunidade
+- **Participe de discussões** em issues de projetos que você usa — reportar bugs bem documentados e sugerir features com argumentação técnica são formas de contribuir mesmo sem escrever código
 
 ### GitHub Pages
 
@@ -932,6 +1212,7 @@ O GitHub oferece hospedagem gratuita para sites estáticos:
 | Gerador de .gitignore | https://gitignore.io |
 | Conventional Commits | https://www.conventionalcommits.org/pt-br |
 | SimpleIcons — logos para badges | https://simpleicons.org |
+| Escolher uma licença | https://choosealicense.com |
 
 ---
 
