@@ -9,10 +9,10 @@
 ## Índice
 
 1. [O que é Git e GitHub](#1-o-que-é-git-e-github)
-2. [Criando seu primeiro repositório](#2-criando-seu-primeiro-repositório)
-3. [Criando seu perfil](#3-criando-seu-perfil)
-4. [Ferramentas](#4-ferramentas)
-5. [Template Base](#5-template-base)
+2. [Criando seu perfil](#2-criando-seu-perfil)
+3. [Ferramentas](#3-ferramentas)
+4. [Template Base](#4-template-base)
+5. [Criando seu primeiro repositório](#5-criando-seu-primeiro-repositório)
 6. [Instalando o Git](#6-instalando-o-git)
 7. [Configurando o Git](#7-configurando-o-git)
 8. [Integrando com VS Code](#8-integrando-com-vs-code)
@@ -68,9 +68,213 @@ GitHub →  plataforma na nuvem que armazena e compartilha repositórios Git
 | **Clone** | Cópia local de um repositório remoto | Baixar o projeto completo |
 | **Push / Pull** | Enviar / receber alterações | Upload / Download das mudanças |
 
+> 📌 **Nota:** os conceitos de Branch, Merge e os demais serão praticados no Tópico 9. Por ora, guarde apenas a ideia geral — faz mais sentido quando você coloca a mão no terminal.
+
 ---
 
-## 2. Criando seu primeiro repositório
+## 2. Criando seu perfil
+
+### O repositório especial de perfil
+
+O GitHub tem um recurso especial: se você criar um repositório com o **mesmo nome do seu username**, o `README.md` desse repositório é exibido diretamente na sua página de perfil público.
+
+**Como criar:**
+
+1. Clique em **"New repository"**
+2. No campo de nome, digite exatamente o seu username (ex: `phelipee15`)
+3. O GitHub reconhece automaticamente e exibe a mensagem: *"You found a secret!"*
+4. Marque como **Public** e ative **"Add a README file"**
+5. Clique em **"Create repository"**
+
+### Estrutura recomendada para o README de perfil
+
+Monte o seu README seguindo esta ordem:
+
+1. **Banner animado no topo** — uma imagem de cabeçalho com seu nome (gerada com Capsule Render, veja no Tópico 3)
+2. **Badges de redes sociais** — botões clicáveis para LinkedIn, e-mail, GitHub, Discord etc.
+3. **Bloco "Sobre mim"** — duas ou três frases diretas: quem você é, onde estuda ou trabalha, no que está focado agora
+4. **Tecnologias e ferramentas** — ícones das linguagens e ferramentas que você usa (gerados com Skill Icons, veja no Tópico 3)
+5. **Projetos em destaque** — links para os repositórios mais relevantes do seu perfil
+6. **Footer animado** — uma imagem de rodapé combinando com o banner do topo
+
+> 💡 O Tópico 4 traz um template completo pronto para copiar e adaptar.
+
+---
+
+## 3. Ferramentas
+
+### Gerador visual de perfil
+
+> **https://profile-readme-generator.com/pt-BR**
+
+Interface visual sem precisar escrever código. Você arrasta blocos, preenche os campos e o site gera o Markdown pronto.
+
+**Resultado:** um arquivo `README.md` completo, pronto para colar no repositório de perfil.
+
+---
+
+### Capsule Render — Banners animados
+
+Gera banners animados para o topo e rodapé do README.
+
+**Resultado:** uma imagem de cabeçalho ou rodapé com fundo colorido, texto e animação — como o banner deste próprio guia.
+
+```markdown
+![Banner](https://capsule-render.vercel.app/api?type=waving&color=0:1a2a6c,100:2b4aad&height=200&section=header&text=Seu+Nome&fontSize=48&fontColor=ffffff&animation=fadeIn)
+```
+
+| Parâmetro | Descrição | Valores |
+|---|---|---|
+| `type` | Estilo do banner | `waving`, `rect`, `soft`, `egg`, `cylinder` |
+| `color` | Cor ou gradiente | `#1a2a6c` ou `0:1a2a6c,100:ff6b6b` |
+| `text` | Texto exibido | `Seu+Nome` (use `+` no lugar de espaço) |
+| `animation` | Animação | `fadeIn`, `twinkling`, `blinking`, `scaleIn` |
+| `section` | Posição | `header` ou `footer` |
+
+---
+
+### Shields.io — Badges personalizáveis
+
+**Resultado:** pequenos botões coloridos com ícone e texto, usados para exibir tecnologias, links de redes sociais e status de projetos.
+
+```markdown
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+```
+
+A URL segue sempre a mesma estrutura — cada parte controla um aspecto visual da badge:
+
+```
+https://img.shields.io/badge/LABEL-COLOR?style=STYLE&logo=LOGO&logoColor=COLOR
+                               │     │          │         │           │
+                               │     │          │         │           └─ cor do ícone (white)
+                               │     │          │         └─ nome do ícone (python, git...)
+                               │     │          └─ estilo (for-the-badge, flat...)
+                               │     └─ cor de fundo em hex (3776AB)
+                               └─ texto exibido na badge (Python)
+```
+
+| Parâmetro | Descrição | Exemplo |
+|---|---|---|
+| `LABEL` | Texto da badge | `Python`, `LinkedIn` |
+| `COLOR` | Cor de fundo em hex | `3776AB`, `EA4335` |
+| `style` | Estilo visual | `for-the-badge`, `flat`, `flat-square` |
+| `logo` | Ícone da badge | `python`, `github`, `linkedin` |
+| `logoColor` | Cor do ícone | `white`, `black` |
+
+> 💡 Encontre os nomes dos ícones disponíveis em: https://simpleicons.org
+
+---
+
+### Skill Icons — Ícones de tecnologia
+
+**Resultado:** uma fileira de ícones coloridos representando as tecnologias que você domina.
+
+```markdown
+![Skills](https://skillicons.dev/icons?i=python,js,lua,nodejs,c,git,vscode,sqlite)
+```
+
+Basta listar as tecnologias separadas por vírgula no parâmetro `i=`.
+
+---
+
+### GitHub Readme Stats — Cards de estatísticas
+
+**Resultado:** cards que exibem automaticamente suas estatísticas do GitHub (commits, stars, linguagens mais usadas) sempre atualizados.
+
+```markdown
+![Stats](https://github-readme-stats.vercel.app/api?username=SEU_USERNAME&show_icons=true&theme=tokyonight)
+![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=SEU_USERNAME&layout=compact&theme=tokyonight)
+```
+
+Temas disponíveis: `dark`, `radical`, `tokyonight`, `dracula`, `gruvbox`, `cobalt`, `synthwave`
+
+---
+
+### Animação da cobrinha
+
+> ⚠️ **Este passo é opcional e mais avançado.** Ele envolve GitHub Actions e arquivos de configuração que não são necessários agora. Sinta-se à vontade para voltar a ele depois que estiver confortável com o restante do guia.
+
+**Resultado:** uma animação de cobrinha que percorre o gráfico de contribuições do seu perfil, atualizada automaticamente todo dia.
+
+Crie o arquivo `.github/workflows/snake.yml` no repositório de perfil:
+
+```yaml
+name: Generate Snake
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Platane/snk@v3
+        with:
+          github_user_token: ${{ secrets.GITHUB_TOKEN }}
+          outputs: |
+            dist/snake.svg
+            dist/snake-dark.svg?palette=github-dark
+      - uses: crazy-max/ghaction-github-pages@v3
+        with:
+          target_branch: snake-output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+Depois use no README:
+
+```markdown
+![Snake](https://raw.githubusercontent.com/SEU_USERNAME/SEU_USERNAME/snake-output/snake.svg)
+```
+
+---
+
+## 4. Template Base
+
+```markdown
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a2a6c,50:3e5abb,100:2b4aad&height=200&section=header&text=SEU_NOME&fontSize=48&fontColor=ffffff&fontAlignY=38&desc=Developer+%7C+Área+1+%7C+Área+2&descAlignY=58&descSize=18&animation=fadeIn" width="100%"/>
+</div>
+
+<div align="center">
+  <a href="https://linkedin.com/in/SEU_PERFIL">
+    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/>
+  </a>
+  <a href="mailto:SEU_EMAIL@gmail.com">
+    <img src="https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white"/>
+  </a>
+</div>
+
+<br/>
+
+## Sobre mim
+
+Escreva aqui uma apresentação direta: quem você é, onde estuda ou trabalha, no que está focado agora.
+
+## Tecnologias e Ferramentas
+
+<div align="center">
+  <img src="https://skillicons.dev/icons?i=python,js,nodejs,git,vscode"/>
+</div>
+
+## Projetos em destaque
+
+| Projeto | Descrição | Tecnologias |
+|---|---|---|
+| [nome-do-projeto](https://github.com/SEU_USERNAME/nome-do-projeto) | Breve descrição | Python, SQLite |
+
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a2a6c,50:3e5abb,100:2b4aad&height=100&section=footer" width="100%"/>
+</div>
+```
+
+---
+
+## 5. Criando seu primeiro repositório
 
 ### Pelo GitHub (interface web)
 
@@ -128,179 +332,6 @@ build/
 ```
 
 > 💡 Gere um `.gitignore` automático para sua linguagem em: https://gitignore.io
-
----
-
-## 3. Criando seu perfil
-
-### O repositório especial de perfil
-
-O GitHub tem um recurso especial: se você criar um repositório com o **mesmo nome do seu username**, o `README.md` desse repositório é exibido diretamente na sua página de perfil público.
-
-**Como criar:**
-
-1. Clique em **"New repository"**
-2. No campo de nome, digite exatamente o seu username (ex: `phelipee15`)
-3. O GitHub reconhece automaticamente e exibe a mensagem: *"You found a secret!"*
-4. Marque como **Public** e ative **"Add a README file"**
-5. Clique em **"Create repository"**
-
-### Estrutura recomendada para o README de perfil
-
-```markdown
-<!-- 1. Banner animado no topo -->
-
-<!-- 2. Badges de redes sociais (LinkedIn, GitHub, Discord, etc.) -->
-
-<!-- 3. Bloco "Sobre mim" com suas informações em destaque -->
-
-<!-- 4. Tecnologias e ferramentas que você usa -->
-
-<!-- 5. Projetos em destaque (links para repos) -->
-
-<!-- 6. Footer animado -->
-```
-
----
-
-## 4. Ferramentas
-
-### Gerador visual de perfil
-
-> **https://profile-readme-generator.com/pt-BR**
-
-Interface visual sem precisar escrever código. Você arrasta blocos, preenche os campos e o site gera o Markdown pronto.
-
----
-
-### Capsule Render — Banners animados
-
-Gera banners animados para o topo e rodapé do README.
-
-```markdown
-![Banner](https://capsule-render.vercel.app/api?type=waving&color=0:1a2a6c,100:2b4aad&height=200&section=header&text=Seu+Nome&fontSize=48&fontColor=ffffff&animation=fadeIn)
-```
-
-| Parâmetro | Descrição | Valores |
-|---|---|---|
-| `type` | Estilo do banner | `waving`, `rect`, `soft`, `egg`, `cylinder` |
-| `color` | Cor ou gradiente | `#1a2a6c` ou `0:1a2a6c,100:ff6b6b` |
-| `text` | Texto exibido | `Seu+Nome` (use `+` no lugar de espaço) |
-| `animation` | Animação | `fadeIn`, `twinkling`, `blinking`, `scaleIn` |
-| `section` | Posição | `header` ou `footer` |
-
----
-
-### Shields.io — Badges personalizáveis
-
-```markdown
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-```
-
-Estrutura de uma badge:
-
-```
-https://img.shields.io/badge/LABEL-COLOR?style=STYLE&logo=LOGO&logoColor=white
-```
-
----
-
-### Skill Icons — Ícones de tecnologia
-
-```markdown
-![Skills](https://skillicons.dev/icons?i=python,js,lua,nodejs,c,git,vscode,sqlite)
-```
-
----
-
-### GitHub Readme Stats — Cards de estatísticas
-
-```markdown
-![Stats](https://github-readme-stats.vercel.app/api?username=SEU_USERNAME&show_icons=true&theme=tokyonight)
-![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=SEU_USERNAME&layout=compact&theme=tokyonight)
-```
-
-Temas: `dark`, `radical`, `tokyonight`, `dracula`, `gruvbox`, `cobalt`, `synthwave`
-
----
-
-### Animação da cobrinha
-
-Crie o arquivo `.github/workflows/snake.yml` no repositório de perfil:
-
-```yaml
-name: Generate Snake
-
-on:
-  schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
-
-jobs:
-  generate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: Platane/snk@v3
-        with:
-          github_user_token: ${{ secrets.GITHUB_TOKEN }}
-          outputs: |
-            dist/snake.svg
-            dist/snake-dark.svg?palette=github-dark
-      - uses: crazy-max/ghaction-github-pages@v3
-        with:
-          target_branch: snake-output
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-```
-
-Depois use no README:
-
-```markdown
-![Snake](https://raw.githubusercontent.com/SEU_USERNAME/SEU_USERNAME/snake-output/snake.svg)
-```
-
----
-
-## 5. Template Base
-
-```markdown
-<div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a2a6c,50:3e5abb,100:2b4aad&height=200&section=header&text=SEU_NOME&fontSize=48&fontColor=ffffff&fontAlignY=38&desc=Developer+%7C+Área+1+%7C+Área+2&descAlignY=58&descSize=18&animation=fadeIn" width="100%"/>
-</div>
-
-<div align="center">
-  <a href="https://linkedin.com/in/SEU_PERFIL">
-    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/>
-  </a>
-  <a href="mailto:SEU_EMAIL@gmail.com">
-    <img src="https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white"/>
-  </a>
-</div>
-
-<br/>
-
-## Sobre mim
-
-Escreva aqui uma apresentação direta: quem você é, onde estuda ou trabalha, no que está focado agora.
-
-## Tecnologias e Ferramentas
-
-<div align="center">
-  <img src="https://skillicons.dev/icons?i=python,js,nodejs,git,vscode"/>
-</div>
-
-## Projetos em destaque
-
-| Projeto | Descrição | Tecnologias |
-|---|---|---|
-| [nome-do-projeto](https://github.com/SEU_USERNAME/nome-do-projeto) | Breve descrição | Python, SQLite |
-
-<div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a2a6c,50:3e5abb,100:2b4aad&height=100&section=footer" width="100%"/>
-</div>
-```
 
 ---
 
@@ -520,18 +551,27 @@ git diff arquivo.py                 # ver o que mudou antes de commitar
 git show abc1234                    # detalhes de um commit específico
 ```
 
+> 💡 **O que é `abc1234`?** É o hash do commit — um identificador único gerado automaticamente pelo Git para cada registro. Você obtém esses hashes rodando `git log --oneline`, que lista os commits no formato `abc1234 mensagem do commit`. Use qualquer um desses códigos nos comandos que pedem um commit específico.
+
 ### Desfazendo alterações
+
+> 📌 **Nota:** os comandos abaixo são úteis no dia a dia, mas você não precisa dominá-los todos agora. Conheça-os, saiba que existem, e volte aqui quando precisar.
 
 ```bash
 git restore arquivo.py              # descartar mudanças não commitadas
 git restore --staged arquivo.py     # remover do stage
-git reset --soft HEAD~1             # desfazer o último commit (mantém mudanças)
-git revert abc1234                  # criar commit que desfaz outro
+git commit --amend -m "nova mensagem"  # corrigir a mensagem do último commit (somente antes do push)
+git reset --soft HEAD~1             # desfazer o último commit (mantém as mudanças nos arquivos)
+git revert abc1234                  # criar um novo commit que desfaz outro sem apagar o histórico
 ```
+
+> 💡 **O que é `HEAD~1`?** `HEAD` é um ponteiro que indica em qual commit você está agora. A notação `~1` significa "um passo antes". Então `HEAD~1` é o commit anterior ao atual. `HEAD~3` seriam os três commits anteriores. Você vê o `HEAD` no histórico com `git log --oneline`.
 
 ### Stash — Guardando trabalho inacabado
 
-O stash funciona como uma gaveta temporária. Guarda o que você estava fazendo para poder trocar de branch e depois recupera tudo de onde parou.
+> 📌 **Nota:** o stash é um recurso que você vai valorizar mais à medida que trabalhar em equipe. Por ora, guarde a ideia: ele funciona como uma gaveta temporária para o trabalho inacabado.
+
+O stash guarda o que você estava fazendo para você poder trocar de branch e depois recupera tudo de onde parou.
 
 ```
 Situação:  você está no meio de uma feature quando chega um bug urgente
@@ -549,6 +589,8 @@ git stash apply stash@{1}           # recuperar um específico (mantém no stash
 git stash drop stash@{0}            # remover sem aplicar
 git stash clear                     # limpar tudo
 ```
+
+> 💡 **O que é `stash@{0}`?** É o índice da lista de stashes. `stash@{0}` é sempre o mais recente, `stash@{1}` é o segundo mais recente, e assim por diante. Use `git stash list` para ver todos com seus índices.
 
 **Fluxo completo:**
 
@@ -605,6 +647,8 @@ github.com/outro/projeto   →   github.com/SEU_USERNAME/projeto
 ```
 
 **Quando usar:** contribuir com projetos open source que você não tem permissão de editar diretamente.
+
+> 💡 **O que são `origin` e `upstream`?** São apenas **apelidos** (nomes curtos) para URLs de repositórios remotos — o Git permite dar um nome a cada endereço para não precisar digitá-lo inteiro toda vez. Por convenção, `origin` aponta para o seu fork e `upstream` aponta para o repositório original. Os nomes em si não têm nada de especial; você poderia chamá-los de qualquer coisa, mas seguir essa convenção facilita a colaboração.
 
 ```bash
 # Clone o SEU fork (não o original)
@@ -726,9 +770,11 @@ Closes #42
 
 ```
 Merge commit      →  preserva todo o histórico da branch
-Squash and merge  →  junta todos os commits em um só (main mais limpa) ← mais comum
+Squash and merge  →  junta todos os commits em um só (main mais limpa) ← recomendado para começar
 Rebase and merge  →  reaplica commits sem criar merge commit
 ```
+
+> 💡 **Qual usar?** Para começar, use sempre **Squash and merge** — ele mantém o histórico da `main` limpo e fácil de ler. Os outros tipos podem ser explorados depois, quando você tiver mais familiaridade com o fluxo de branches.
 
 ### Draft Pull Requests
 
@@ -755,7 +801,7 @@ Um **Draft PR** sinaliza que o trabalho ainda está em andamento. Clique na seta
 
 - Faça commits **pequenos e frequentes** — um por alteração lógica
 - Sempre rode `git status` antes de `git add .`
-- Use `git commit --amend` para corrigir a última mensagem **antes** de fazer push
+- Use `git commit --amend -m "nova mensagem"` para corrigir a mensagem do último commit **antes** de fazer push — esse comando foi apresentado no Tópico 9
 
 ### Issues e Pull Requests
 
