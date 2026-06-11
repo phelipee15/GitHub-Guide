@@ -837,5 +837,4 @@ Um **Draft PR** sinaliza que o trabalho ainda está em andamento. Clique na seta
 
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:161b22,100:21262d&height=100&section=footer" width="100%"/>
-  <sub>Guia criado para o minicurso de GitHub</sub>
 </div>
