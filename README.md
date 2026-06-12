@@ -237,7 +237,7 @@ Depois use no README:
 
 ```markdown
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a2a6c,50:3e5abb,100:2b4aad&height=200&section=header&text=SEU_NOME&fontSize=48&fontColor=ffffff&fontAlignY=38&desc=Developer+%7C+Área+1+%7C+Área+2&descAlignY=58&descSize=18&animation=fadeIn" width="100%"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a2a6c,50:3e5abb,100:2b4aad&height=200&section=header&text=SEU_NOME&fontSize=48&fontColor=ffffff&fontAlignY=38&desc=Área+1+%7C+Área+2+%7C+Área+3&descAlignY=58&descSize=18&animation=fadeIn" width="100%"/>
 </div>
 
 <!-- Badges de contato — substitua os placeholders pelos seus dados -->
@@ -255,7 +255,7 @@ Depois use no README:
 
 <!-- Badge da instituição — substitua NOME+DO+CURSO, NOME+DA+INSTITUIÇÃO e a cor (006400 = verde escuro) -->
 <div align="center">
-  <img src="https://img.shields.io/badge/NOME+DO+CURSO-NOME+DA+INSTITUIÇÃO-006400?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Matemática Aplicada e Computacional-UFS-004684?style=for-the-badge"/>
 </div>
 
 <br/>
@@ -267,14 +267,14 @@ Depois use no README:
 <!-- 2. O que está aprendendo agora?   Ex: Atualmente estudo Python e estruturas de dados      -->
 <!-- 3. Qual seu objetivo?    Ex: Tenho interesse em ciência de dados e desenvolvimento web    -->
 
-Sou estudante de NOME DO CURSO na NOME DA INSTITUIÇÃO.
-Atualmente estou aprendendo TECNOLOGIA/ÁREA e tenho interesse em OBJETIVO.
+Sou estudante de Matemática Aplicada e Computacional na Universidade Federal de Sergipe.
+Atualmente sou membro ativo da Liga Acadêmica Matemática e Empresa e tenho interesse na área de dados, inteligência artificial e automações.
 
 ## Tecnologias e Ferramentas
 
 <!-- Liste as tecnologias separadas por vírgula — veja as disponíveis em: https://skillicons.dev -->
 <div align="center">
-  <img src="https://skillicons.dev/icons?i=python,js,nodejs,git,vscode"/>
+  <img src="https://skillicons.dev/icons?i=python,git,vscode"/>
 </div>
 
 ## Projetos em destaque
